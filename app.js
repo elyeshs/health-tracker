@@ -6,12 +6,16 @@ typeSelect.onchange = updateForm;
 
 function updateForm() {
     const t = typeSelect.value;
-    if (t === 'seance') {
-        dynamicFields.innerHTML = `<input type="number" id="vitesse" step="0.1" placeholder="Vitesse (km/h)"><input type="number" id="temps" step="0.1" placeholder="Temps (min)"><input type="number" id="pente" step="0.1" placeholder="Pente (%)"><input type="number" id="distance" step="0.1" placeholder="Distance (km)">`;
+    if (t === 'cardio') {
+        dynamicFields.innerHTML = `
+            <input type="number" id="vitesse" step="0.1" placeholder="Vitesse (km/h)">
+            <input type="number" id="temps" step="0.1" placeholder="Temps (min)">
+            <input type="number" id="pente" step="0.1" placeholder="Pente (%)">
+            <input type="number" id="distance" step="0.1" placeholder="Distance (km)">`;
     } else if (t === 'poids') {
         dynamicFields.innerHTML = `<input type="number" id="valeur" step="0.1" placeholder="Poids (kg)">`;
     } else {
-        dynamicFields.innerHTML = `<input type="text" id="nom" placeholder="Nom du record"><input type="number" id="valeur" step="0.1" placeholder="Valeur">`;
+        dynamicFields.innerHTML = `<input type="text" id="nom" placeholder="Nom record"><input type="number" id="valeur" step="0.1" placeholder="Valeur">`;
     }
 }
 
@@ -28,14 +32,15 @@ function saveData() {
 }
 
 function render() {
-    const list = document.getElementById('historique-list');
-    list.innerHTML = data.sort((a,b) => new Date(b.date) - new Date(a.date)).map(d => `
-        <div class="row"><strong>${d.date}</strong><br>
-        <small>${d.type.toUpperCase()} : ${Object.entries(d.details).map(([k,v]) => `${k}: ${v}`).join(' | ')}</small></div>
+    const table = document.getElementById('historique-table');
+    table.innerHTML = data.sort((a,b) => new Date(b.date) - new Date(a.date)).map(d => `
+        <tr>
+            <td>${d.date}</td>
+            <td style="text-transform: capitalize; font-weight: 600;">${d.type}</td>
+            <td style="color: #64748b;">${Object.entries(d.details).map(([k,v]) => `<strong>${v}</strong> ${k}`).join(' | ')}</td>
+        </tr>
     `).join('');
 }
-
-document.getElementById('confidentialite-btn').onclick = () => document.getElementById('historique-list').classList.toggle('blur');
 
 updateForm();
 render();
