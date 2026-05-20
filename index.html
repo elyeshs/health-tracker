@@ -3,39 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Health Tracker</title>
+    <title>Santé Tracker</title>
     <link rel="manifest" href="manifest.json">
     <link rel="stylesheet" href="style.css">
-    <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body>
     <div class="container">
-        <header>
-            <h1>Santé Tracker</h1>
-            <button id="confidentialite-btn"><i data-lucide="eye-off"></i></button>
-        </header>
-
-        <div class="bento-grid">
-            <section class="card">
-                <h3>Nouvelle Saisie</h3>
+        <aside>
+            <div class="card">
+                <h2>Nouvelle Séance</h2>
                 <select id="type-saisie">
-                    <option value="seance">Séance Cardio</option>
+                    <option value="cardio">Séance Cardio</option>
                     <option value="poids">Suivi Poids</option>
-                    <option value="record">Nouveau Record</option>
+                    <option value="record">Record</option>
                 </select>
                 <input type="date" id="date-saisie">
                 <div id="dynamic-fields"></div>
                 <button onclick="saveData()">Enregistrer</button>
-            </section>
+            </div>
+        </aside>
 
-            <section class="card">
-                <h3>Historique</h3>
-                <div id="historique-list"></div>
-            </section>
-        </div>
+        <main>
+            <div class="card">
+                <h2>Historique des Séances</h2>
+                <table>
+                    <thead>
+                        <tr><th>Date</th><th>Type</th><th>Détails</th></tr>
+                    </thead>
+                    <tbody id="historique-table"></tbody>
+                </table>
+            </div>
+        </main>
     </div>
     <script src="app.js"></script>
-    <script>lucide.createIcons();</script>
     <script>if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js');</script>
 </body>
 </html>
